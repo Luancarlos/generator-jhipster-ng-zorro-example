@@ -33,10 +33,31 @@
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
-    "otherModules": [],
+    "otherModules": [
+      {
+        "name": "generator-jhipster-login-page",
+        "version": "1.0.0"
+      }
+    ],
     "enableTranslation": true,
     "nativeLanguage": "pt-br",
     "languages": ["pt-br"],
-    "blueprints": []
+    "blueprints": [
+      {
+        "name": "generator-jhipster-login-page",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "generator-jhipster-login-page": {
+    "jhipsterVersion": "6.5.1",
+    "applicationType": "monolith",
+    "baseName": "ngzorro",
+    "useSass": true,
+    "enableTranslation": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": ""
   }
 }

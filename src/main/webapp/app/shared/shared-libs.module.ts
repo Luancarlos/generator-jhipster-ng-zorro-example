@@ -6,6 +6,8 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+// eslint-disable-next-line @typescript-eslint/camelcase
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 @NgModule({
   exports: [
@@ -16,7 +18,9 @@ import { TranslateModule } from '@ngx-translate/core';
     InfiniteScrollModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    NgZorroAntdModule
   ]
+  // eslint-disable-next-line @typescript-eslint/camelcase
 })
 export class NgzorroSharedLibsModule {}

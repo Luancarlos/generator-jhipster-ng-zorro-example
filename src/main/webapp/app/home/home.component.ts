@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   authSubscription: Subscription;
   modalRef: NgbModalRef;
 
+  isCollapsed = false;
+
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,

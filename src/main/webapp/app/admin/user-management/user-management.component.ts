@@ -31,6 +31,12 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   previousPage: any;
   reverse: any;
 
+  isAllDisplayDataChecked = false;
+  isIndeterminate = false;
+  mapOfCheckedId: { [key: string]: boolean } = {};
+  listOfAllData: User[] = [];
+  numberOfChecked = 0;
+
   constructor(
     private userService: UserService,
     private alertService: JhiAlertService,
@@ -138,5 +144,16 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   private onError(error) {
     this.alertService.error(error.error, error.message, null);
+  }
+
+  checkAll(value: boolean): void {
+    this.users.forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.refreshStatus();
+  }
+
+  refreshStatus(): void {
+    this.isAllDisplayDataChecked = this.users.every(item => this.mapOfCheckedId[item.id]);
+    this.isIndeterminate = this.users.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
+    this.numberOfChecked = this.users.filter(item => this.mapOfCheckedId[item.id]).length;
   }
 }

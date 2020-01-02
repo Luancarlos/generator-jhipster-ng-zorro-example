@@ -1,15 +1,22 @@
-<div>
-    <h2>
-        <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
-        <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
-            <fa-icon [icon]="'plus'"></fa-icon> <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
-        </button>
-    </h2>
+<div class="">
+    <nz-page-header [nzGhost]="false">
+        <nz-page-header-title>
+            <span jhiTranslate="userManagement.home.title">Users</span>
+        </nz-page-header-title>
+        <nz-page-header-extra>
+            <button nz-button nzType="primary">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+                <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
+            </button>
+        </nz-page-header-extra>
+    </nz-page-header>
+
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
-    <div class="table-responsive" *ngIf="users">
+    <!-- <div class="table-responsive" *ngIf="users">
         <table class="table table-striped" aria-describedby="user-management-page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
                 <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -67,7 +74,79 @@
             </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
+    <nz-table nzShowSizeChanger [nzData]="users" nzShowPagination="false" [nzScroll]="{ x: '1350px', y: '240px' }">
+      <thead>
+        <tr>
+          <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+          nzWidth="50px"></th>
+          <th nzWidth="50px" nzShowSort><span jhiTranslate="global.field.id">ID</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.login">Login</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.email">Email</span></th>
+          <th nzShowSort></th>
+          <th nzShowSort> <span jhiTranslate="userManagement.langKey">Lang Key</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.profiles">Profiles</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.createdDate">Created Date</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></th>
+          <th nzShowSort><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></th>
+          <th nzWidth="150px">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+            <td
+            nzShowCheckbox
+            [(nzChecked)]="mapOfCheckedId[user.id]"
+            (nzCheckedChange)="refreshStatus()"></td
+                >
+            <td><a [routerLink]="['./', user.login, 'view']">{{user.id}}</a></td>
+            <td>{{user.login}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
+                        jhiTranslate="userManagement.deactivated">Deactivated</button>
+                <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
+                        [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
+            </td>
+            <td>{{user.langKey}}</td>
+            <td>
+                <div *ngFor="let authority of user.authorities">
+                    <span class="badge badge-info">{{ authority }}</span>
+                </div>
+            </td>
+            <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+            <td>{{user.lastModifiedBy}}</td>
+            <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+            <td nzRight="0px">
+                <nz-button-group>
+                    <button nz-button nzType="default" 
+                    [routerLink]="['./', user.login, 'view']">
+                        <i nz-icon nzType="eye" nzTheme="outline"></i>
+                        <!-- <span jhiTranslate="entity.action.view">View</span> -->
+                    </button>
+
+                    <button nz-button nzType="primary" 
+                            [routerLink]="['./', user.login, 'edit']"
+                            queryParamsHandling="merge">
+                        <i nz-icon nzType="edit" nzTheme="outline"></i>
+                        <!-- <span jhiTranslate="entity.action.edit">Edit</span> -->
+                    </button>
+
+                    <button nz-button nzType="danger" 
+                            (click)="deleteUser(user)"
+                            [disabled]="currentAccount.login === user.login">
+                        <i nz-icon nzType="delete" nzTheme="outline"></i>
+                        <!-- <span jhiTranslate="entity.action.delete">Delete</span> -->
+                    </button>
+                </nz-button-group>
+            </td>
+        </tr>
+      </tbody>
+    </nz-table>
     <div *ngIf="users">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>

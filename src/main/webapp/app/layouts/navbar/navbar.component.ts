@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -60,18 +60,10 @@ export class NavbarComponent implements OnInit {
     return this.accountService.isAuthenticated();
   }
 
-  login() {
-    this.modalRef = this.loginModalService.open();
-  }
-
   logout() {
     this.collapseNavbar();
     this.loginService.logout();
     this.router.navigate(['']);
-  }
-
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
   getImageUrl() {

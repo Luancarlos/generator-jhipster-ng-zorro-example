@@ -1,182 +1,110 @@
-@import 'bootstrap-variables';
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
+// @import 'bootstrap-variables';
+// @import '~bootstrap/scss/functions';
+// @import '~bootstrap/scss/variables';
+
+@import '~ng-zorro-antd/ng-zorro-antd.min.css';
+@import '~ng-zorro-antd/style/index.min.css';
 
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
-
-body,
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 300;
+html,
+body {
+  height: 100%;
+}
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
-a,
-a:hover {
-  color: #533f03;
-  font-weight: bold;
+.app-layout {
+  height: 100vh;
 }
 
-a:hover {
-  /* make sure browsers use the pointer cursor for anchors, even with no href */
+.menu-sidebar {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+}
+
+.header-trigger {
+  height: 64px;
+  padding: 20px 24px;
+  font-size: 20px;
   cursor: pointer;
+  transition: all 0.3s, padding 0s;
 }
 
-.dropdown-item:hover {
-  color: $dropdown-link-hover-color;
+.trigger:hover {
+  color: #1890ff;
 }
 
-/* ==========================================================================
-Browser Upgrade Prompt
-========================================================================== */
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
-/* ==========================================================================
-Generic styles
-========================================================================== */
-
-/* Error highlight on input fields */
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid green;
-}
-
-.ng-invalid:not(form) {
-  border-left: 5px solid red;
-}
-
-/* other generic styles */
-
-.jh-card {
-  padding: 1.5%;
-  margin-top: 20px;
-  border: none;
-}
-
-.error {
-  color: white;
-  background-color: red;
-}
-
-.pad {
-  padding: 10px;
-}
-
-.w-40 {
-  width: 40% !important;
-}
-
-.w-60 {
-  width: 60% !important;
-}
-
-.break {
-  white-space: normal;
-  word-break: break-all;
-}
-
-.readonly {
-  background-color: #eee;
-  opacity: 1;
-}
-
-.footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
-}
-
-.hand,
-[jhisortby] {
-  cursor: pointer;
-}
-
-/* ==========================================================================
-Custom alerts for notification
-========================================================================== */
-.alerts {
-  .alert {
-    text-overflow: ellipsis;
-    pre {
-      background: none;
-      border: none;
-      font: inherit;
-      color: inherit;
-      padding: 0;
-      margin: 0;
-    }
-    .popover pre {
-      font-size: 10px;
-    }
-  }
-  .jhi-toast {
-    position: fixed;
-    width: 100%;
-    &.left {
-      left: 5px;
-    }
-    &.right {
-      right: 5px;
-    }
-    &.top {
-      top: 55px;
-    }
-    &.bottom {
-      bottom: 55px;
-    }
-  }
-}
-
-@media screen and (min-width: 480px) {
-  .alerts .jhi-toast {
-    width: 50%;
-  }
-}
-
-/* ==========================================================================
-entity detail page css
-========================================================================== */
-.row.jh-entity-details > {
-  dd {
-    margin-bottom: 15px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .row.jh-entity-details > {
-    dt {
-      margin-bottom: 15px;
-    }
-    dd {
-      border-bottom: 1px solid #eee;
-      padding-left: 180px;
-      margin-left: 0;
-    }
-  }
-}
-
-/* ==========================================================================
-ui bootstrap tweaks
-========================================================================== */
-.nav,
-.pagination,
-.carousel,
-.panel-title a {
-  cursor: pointer;
-}
-
-.thread-dump-modal-lock {
-  max-width: 450px;
+.sidebar-logo {
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 64px;
+  background: #001529;
+  transition: all 0.3s;
 }
 
-/* jhipster-needle-scss-add-main JHipster will add new css style */
+.sidebar-logo img {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+}
+
+.sidebar-logo h1 {
+  display: inline-block;
+  margin: 0 0 0 20px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+}
+
+nz-header {
+  padding: 0 !important;
+  width: 100%;
+  z-index: 2;
+}
+
+.app-header {
+  position: relative;
+  height: 64px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+nz-content {
+  margin: 24px;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  height: auto;
+  margin-bottom: 24px;
+}
+.imgUrl-profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 12px;
+}
+.ant-menu-horizontal {
+  line-height: 62px !important;
+  border-bottom: 0px !important;
+}

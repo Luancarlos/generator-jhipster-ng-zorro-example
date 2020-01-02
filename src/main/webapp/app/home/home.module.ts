@@ -8,5 +8,6 @@ import { HomeComponent } from './home.component';
 @NgModule({
   imports: [NgzorroSharedModule, RouterModule.forChild([HOME_ROUTE])],
   declarations: [HomeComponent]
+  // eslint-disable-next-line @typescript-eslint/camelcase
 })
 export class NgzorroHomeModule {}
