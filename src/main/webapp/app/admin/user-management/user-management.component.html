@@ -85,15 +85,15 @@
           (nzCheckedChange)="checkAll($event)"
           nzWidth="50px"></th>
           <th nzWidth="50px" nzShowSort><span jhiTranslate="global.field.id">ID</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.login">Login</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.email">Email</span></th>
-          <th nzShowSort></th>
-          <th nzShowSort> <span jhiTranslate="userManagement.langKey">Lang Key</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.profiles">Profiles</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.createdDate">Created Date</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></th>
-          <th nzShowSort><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></th>
-          <th nzWidth="150px">Ações</th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.login">Login</span></th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.email">Email</span></th>
+          <th nzShowSort nzWidth="100px"><span>isAtivo</span></th>
+          <th nzShowSort nzWidth="100px"> <span jhiTranslate="userManagement.langKey">Lang Key</span></th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.profiles">Profiles</span></th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.createdDate">Created Date</span></th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></th>
+          <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></th>
+          <th nzWidth="250px">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -107,15 +107,23 @@
             <td>{{user.login}}</td>
             <td>{{user.email}}</td>
             <td>
-                <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
-                        jhiTranslate="userManagement.deactivated">Deactivated</button>
-                <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
-                        [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
+                    <button nz-button nzSize="small" nzType="danger" (click)="setActive(user, true)" 
+                    *ngIf="!user.activated" 
+                    jhiTranslate="userManagement.deactivated">
+                    Deactivated
+                    </button>
+
+                    <button nz-button nzSize="small" nzType="primary"
+                    (click)="setActive(user, false)" 
+                    *ngIf="user.activated"
+                    [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">
+                    Activated</button>
             </td>
             <td>{{user.langKey}}</td>
             <td>
                 <div *ngFor="let authority of user.authorities">
-                    <span class="badge badge-info">{{ authority }}</span>
+                    <!-- <span class="badge badge-info">{{ authority }}</span> -->
+                    <nz-badge [nzText]="authority" nzColor="#108ee9"></nz-badge>
                 </div>
             </td>
             <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>

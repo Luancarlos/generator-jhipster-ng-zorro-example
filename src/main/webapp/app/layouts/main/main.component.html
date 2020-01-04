@@ -168,8 +168,8 @@
       
     </nz-header>
 
-    <nz-content>
-      <div [ngClass]="isAuthenticate() ? 'inner-content' : ''">
+    <nz-content [ngClass]="isAuthenticate() ? 'content' : ''">
+      <div [ngClass]="isAuthenticate() ? 'inner-content' : 'content-login'">
         <router-outlet></router-outlet>
       </div>
     </nz-content>

@@ -14,7 +14,7 @@
                             <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
                                 <strong>Failed to sign in!</strong> Please check your credentials and try again.
                             </div>
-                            <form (ngSubmit)="login()" class="my-login-validation">
+                            <!-- <form (ngSubmit)="login()" class="my-login-validation">
                                 <div class="form-group">
                                     <label for="username">Usuário</label>
                                     <input  type="text" class="form-control" id="username" name="username" [(ngModel)]="username" required autofocus>
@@ -49,7 +49,34 @@
                                     </button>
                                 </div>
 
-                            </form>
+                            </form> -->
+                            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
+                                <nz-form-item>
+                                  <nz-form-control nzErrorTip="Please input your username!">
+                                    <nz-input-group nzPrefixIcon="user">
+                                      <input type="text" nz-input formControlName="username" placeholder="Username" />
+                                    </nz-input-group>
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                  <nz-form-control nzErrorTip="Please input your Password!">
+                                    <nz-input-group nzPrefixIcon="lock">
+                                      <input type="password" nz-input formControlName="password" placeholder="Password" />
+                                    </nz-input-group>
+                                  </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                  <nz-form-control>
+                                    <label nz-checkbox formControlName="rememberMe">
+                                      <span>Remember me</span>
+                                    </label>
+                                    <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
+                                    <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+                                    Or
+                                    <a>register now!</a>
+                                  </nz-form-control>
+                                </nz-form-item>
+                              </form>
                         </div>
                     </div>
                     <div class="footer">
