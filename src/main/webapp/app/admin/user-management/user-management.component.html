@@ -4,7 +4,7 @@
             <span jhiTranslate="userManagement.home.title">Users</span>
         </nz-page-header-title>
         <nz-page-header-extra>
-            <button nz-button nzType="primary">
+            <button routerLink="new" nz-button nzType="primary">
                 <i nz-icon nzType="plus" nzTheme="outline"></i>
                 <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
             </button>
@@ -75,7 +75,26 @@
             </tbody>
         </table>
     </div> -->
-    <nz-table nzShowSizeChanger [nzData]="users" nzShowPagination="false" [nzScroll]="{ x: '1350px', y: '240px' }">
+
+    <!-- <div *ngIf="users">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div> -->
+
+    <nz-table 
+    nzShowSizeChanger 
+    [nzTotal]="totalItems"
+    [nzPageIndex]="page"
+    [nzPageSize]="itemsPerPage"
+    [nzFrontPagination]="false"
+    (nzPageIndexChange)="loadPage($event)"
+    [nzData]="users"
+    [nzLoading]="users ? false : true"  
+    [nzScroll]="{ x: '1350px', y: '240px' }">
       <thead>
         <tr>
           <th
@@ -87,7 +106,7 @@
           <th nzWidth="50px" nzShowSort><span jhiTranslate="global.field.id">ID</span></th>
           <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.login">Login</span></th>
           <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.email">Email</span></th>
-          <th nzShowSort nzWidth="100px"><span>isAtivo</span></th>
+          <th nzShowSort nzWidth="100px"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
           <th nzShowSort nzWidth="100px"> <span jhiTranslate="userManagement.langKey">Lang Key</span></th>
           <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.profiles">Profiles</span></th>
           <th nzShowSort nzWidth="200px"><span jhiTranslate="userManagement.createdDate">Created Date</span></th>
@@ -155,12 +174,12 @@
         </tr>
       </tbody>
     </nz-table>
-    <div *ngIf="users">
+    <!-- <div *ngIf="users">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
             <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
-    </div>
+    </div> -->
 </div>

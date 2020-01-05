@@ -30,6 +30,8 @@ import {
   EditOutline,
   DeleteOutline
 } from '@ant-design/icons-angular/icons';
+// eslint-disable-next-line @typescript-eslint/camelcase
+import { NZ_I18N, pt_BR } from 'ng-zorro-antd';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const icons: IconDefinition[] = [
@@ -71,7 +73,9 @@ const icons: IconDefinition[] = [
   ],
   providers: [
     { provide: NZ_ICON_DEFAULT_TWOTONE_COLOR, useValue: '#00ff00' }, // If not provided, Ant Design's official blue would be used
-    { provide: NZ_ICONS, useValue: icons }
+    { provide: NZ_ICONS, useValue: icons },
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    { provide: NZ_I18N, useValue: pt_BR }
   ]
 })
 export class NgzorroSharedModule {}

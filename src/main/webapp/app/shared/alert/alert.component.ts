@@ -6,9 +6,18 @@ import { JhiAlertService } from 'ng-jhipster';
   template: `
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
-        <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
+        <!-- <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
           <pre [innerHTML]="alert.msg"></pre>
-        </ngb-alert>
+        </ngb-alert> -->
+        <nz-alert
+          *ngIf="alert && alert.type && alert.msg"
+          [nzType]="alert.type"
+          [nzMessage]="htmlToText(alert.msg)"
+          nzShowIcon
+          nzCloseable
+          (nzOnClose)="alert.close(alerts)"
+        ></nz-alert>
+        <br />
       </div>
     </div>
   `
@@ -20,6 +29,8 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.alerts = this.alertService.get();
+    // eslint-disable-next-line no-console
+    console.log('alertas', this.alerts);
   }
 
   setClasses(alert) {
@@ -27,6 +38,12 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
       'jhi-toast': alert.toast,
       [alert.position]: true
     };
+  }
+
+  htmlToText(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.textContent || temp.innerText || '';
   }
 
   ngOnDestroy() {
