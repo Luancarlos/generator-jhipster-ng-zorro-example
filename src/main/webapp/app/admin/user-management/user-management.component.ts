@@ -121,7 +121,12 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     }
   }
 
-  transition() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transition(sort?: { key: string; value: string }) {
+    if (sort) {
+      this.reverse = sort.value === 'descend' ? false : true;
+      this.predicate = sort.key;
+    }
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute.parent,
       queryParams: {
@@ -148,11 +153,15 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   checkAll(value: boolean): void {
+    // eslint-disable-next-line no-console
+    console.log('checkAll', value);
     this.users.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
+    // eslint-disable-next-line no-console
+    console.log('');
     this.isAllDisplayDataChecked = this.users.every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate = this.users.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
     this.numberOfChecked = this.users.filter(item => this.mapOfCheckedId[item.id]).length;

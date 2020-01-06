@@ -11,7 +11,7 @@ import { JhiAlertService } from 'ng-jhipster';
         </ngb-alert> -->
         <nz-alert
           *ngIf="alert && alert.type && alert.msg"
-          [nzType]="alert.type"
+          [nzType]="alert.type == 'danger' ? 'error' : alert.type"
           [nzMessage]="htmlToText(alert.msg)"
           nzShowIcon
           nzCloseable
@@ -29,8 +29,6 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.alerts = this.alertService.get();
-    // eslint-disable-next-line no-console
-    console.log('alertas', this.alerts);
   }
 
   setClasses(alert) {

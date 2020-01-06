@@ -84,7 +84,7 @@ export class MainComponent implements OnInit {
   getImageUrl() {
     setTimeout(() => {
       this.imgUrl = this.accountService.getImageUrl();
-    }, 2000);
+    }, 3000);
   }
 
   logout() {

@@ -8,9 +8,14 @@ import { Subscription } from 'rxjs';
   template: `
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
-        <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
-          <pre [innerHTML]="alert.msg"></pre>
-        </ngb-alert>
+        <nz-alert
+          *ngIf="alert && alert.type && alert.msg"
+          [nzType]="alert.type == 'danger' ? 'error' : alert.type"
+          [nzMessage]="htmlToText(alert.msg)"
+          nzShowIcon
+          nzCloseable
+          (nzOnClose)="alert.close(alerts)"
+        ></nz-alert>
       </div>
     </div>
   `
@@ -103,6 +108,15 @@ export class JhiAlertErrorComponent implements OnDestroy {
       scoped: true
     };
 
+    // eslint-disable-next-line no-console
+    console.log('mensagem', message);
+
     this.alerts.push(this.alertService.addAlert(newAlert, this.alerts));
+  }
+
+  htmlToText(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.textContent || temp.innerText || '';
   }
 }
