@@ -28,7 +28,8 @@ import {
   PlusOutline,
   EyeOutline,
   EditOutline,
-  DeleteOutline
+  DeleteOutline,
+  ArrowLeftOutline
 } from '@ant-design/icons-angular/icons';
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { NZ_I18N, pt_BR } from 'ng-zorro-antd';
@@ -55,7 +56,8 @@ const icons: IconDefinition[] = [
   PlusOutline,
   EyeOutline,
   EditOutline,
-  DeleteOutline
+  DeleteOutline,
+  ArrowLeftOutline
 ];
 
 @NgModule({
