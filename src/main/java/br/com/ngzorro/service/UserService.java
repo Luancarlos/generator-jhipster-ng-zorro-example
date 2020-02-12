@@ -228,6 +228,11 @@ public class UserService {
         });
     }
 
+    @Transactional
+    public void deleteUsersWithIds(List<Long> ids) {
+        userRepository.deleteUsersWithIds(ids);
+    }
+
     public void changePassword(String currentClearTextPassword, String newPassword) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)

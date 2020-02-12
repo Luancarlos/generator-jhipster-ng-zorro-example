@@ -34,6 +34,10 @@ export class UserService {
     return this.http.delete(`${this.resourceUrl}/${login}`);
   }
 
+  deleteMultlipe(ids: number[]): Observable<any> {
+    return this.http.post(`${this.resourceUrl}/delete`, ids);
+  }
+
   authorities(): Observable<string[]> {
     return this.http.get<string[]>(SERVER_API_URL + 'api/users/authorities');
   }

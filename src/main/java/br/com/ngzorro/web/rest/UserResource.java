@@ -187,4 +187,17 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName,  "userManagement.deleted", login)).build();
     }
+
+    /**
+     * {@code DELETE /users} : delete the list ids User.
+     *
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @PostMapping("/users/delete")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Void> deleteUsers(@RequestBody List<Long> ids) {
+        log.debug("REST request to delete Users: {}");
+        this.userService.deleteUsersWithIds(ids);
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName,  "userManagement.deletedMultiple", null)).build();
+    }
 }

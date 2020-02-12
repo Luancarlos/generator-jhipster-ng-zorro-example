@@ -34,9 +34,9 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
-  mapOfCheckedId: { [key: string]: boolean } = {};
+  idsChecked: { [key: string]: boolean } = {};
   listOfAllData: User[] = [];
-  numberOfChecked = 0;
+  visbleModalExcluir = false;
 
   constructor(
     private userService: UserService,
@@ -140,22 +140,22 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   traslateString(i18n) {
-    return this.translateService.get(i18n).toPromise();
+    return this.translateService.get(i18n);
   }
 
   async deleteUser(user: User) {
     const modalRef = this.modalService.create({
-      nzTitle: await this.traslateString('entity.delete.title'),
+      nzTitle: await this.traslateString('entity.delete.title').toPromise(),
       nzContent: UserManagementDeleteDialogComponent,
       nzComponentParams: { user },
       nzFooter: [
         {
-          label: await this.traslateString('entity.action.cancel'),
+          label: await this.traslateString('entity.action.cancel').toPromise(),
           shape: 'default',
           onClick: () => modalRef.destroy()
         },
         {
-          label: await this.traslateString('entity.action.delete'),
+          label: await this.traslateString('entity.action.delete').toPromise(),
           type: 'primary',
           onClick: () => {
             this.userService.emitrEventConfirmDelete();
@@ -177,13 +177,30 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   checkAll(value: boolean): void {
-    this.users.forEach(item => (this.mapOfCheckedId[item.id] = value));
-    this.refreshStatus();
+    this.users.forEach(item => (this.idsChecked[item.id] = value));
   }
 
   refreshStatus(): void {
-    this.isAllDisplayDataChecked = this.users.every(item => this.mapOfCheckedId[item.id]);
-    this.isIndeterminate = this.users.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
-    this.numberOfChecked = this.users.filter(item => this.mapOfCheckedId[item.id]).length;
+    this.isAllDisplayDataChecked = this.users.every(item => this.idsChecked[item.id]);
+    this.isIndeterminate = this.users.some(item => this.idsChecked[item.id]) && !this.isAllDisplayDataChecked;
+  }
+
+  openModalDeleteChecked() {
+    this.visbleModalExcluir = true;
+  }
+
+  deleteUsers() {
+    const ids = [];
+
+    for (const key in this.idsChecked) {
+      ids.push(key);
+    }
+
+    if (ids.length > 0) {
+      this.userService.deleteMultlipe(ids).subscribe(res => {
+        this.loadAll();
+        this.visbleModalExcluir = false;
+      });
+    }
   }
 }

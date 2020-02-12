@@ -4,7 +4,7 @@
             <span jhiTranslate="userManagement.home.title">Users</span>
         </nz-page-header-title>
         <nz-page-header-extra>
-            <button  nz-button nzType="default">
+            <button (click)="openModalDeleteChecked()"  nz-button nzType="default">
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 <span jhiTranslate="entity.action.delete">Delete</span>
             </button>
@@ -33,7 +33,6 @@
           <th
           nzShowCheckbox
           [(nzChecked)]="isAllDisplayDataChecked"
-          [nzIndeterminate]="isIndeterminate"
           (nzCheckedChange)="checkAll($event)"
           nzWidth="50px"></th>
           <th nzSortKey="id" nzWidth="50px" nzShowSort><span jhiTranslate="global.field.id">ID</span></th>
@@ -52,7 +51,7 @@
         <tr *ngFor="let user of users">
             <td
             nzShowCheckbox
-            [(nzChecked)]="mapOfCheckedId[user.id]"
+            [(nzChecked)]="idsChecked[user.id]"
             (nzCheckedChange)="refreshStatus()"></td
                 >
             <td><a [routerLink]="['./', user.login, 'view']">{{user.id}}</a></td>
@@ -116,3 +115,11 @@
         </div>
     </div> -->
 </div>
+
+<nz-modal 
+[(nzVisible)]="visbleModalExcluir" 
+[nzTitle]="traslateString('entity.delete.title') | async" 
+(nzOnCancel)="visbleModalExcluir = false" 
+(nzOnOk)="deleteUsers()">
+    <span jhiTranslate="userManagement.delete.questionAll">confirm remover users</span>
+</nz-modal>
