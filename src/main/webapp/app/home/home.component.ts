@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
@@ -15,7 +14,6 @@ import { Account } from 'app/core/user/account.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account;
   authSubscription: Subscription;
-  modalRef: NgbModalRef;
 
   isCollapsed = false;
 
@@ -45,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.modalRef = this.loginModalService.open();
+    // this.modalRef = this.loginModalService.open();
   }
 
   ngOnDestroy() {

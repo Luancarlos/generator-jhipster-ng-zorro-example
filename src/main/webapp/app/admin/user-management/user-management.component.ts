@@ -1,7 +1,7 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
@@ -11,6 +11,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -45,7 +46,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private eventManager: JhiEventManager,
-    private modalService: NgbModal
+    public modalService: NzModalService,
+    private translateService: TranslateService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -137,9 +139,31 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     this.loadAll();
   }
 
-  deleteUser(user: User) {
-    const modalRef = this.modalService.open(UserManagementDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.user = user;
+  traslateString(i18n) {
+    return this.translateService.get(i18n).toPromise();
+  }
+
+  async deleteUser(user: User) {
+    const modalRef = this.modalService.create({
+      nzTitle: await this.traslateString('entity.delete.title'),
+      nzContent: UserManagementDeleteDialogComponent,
+      nzComponentParams: { user },
+      nzFooter: [
+        {
+          label: await this.traslateString('entity.action.cancel'),
+          shape: 'default',
+          onClick: () => modalRef.destroy()
+        },
+        {
+          label: await this.traslateString('entity.action.delete'),
+          type: 'primary',
+          onClick: () => {
+            this.userService.emitrEventConfirmDelete();
+            modalRef.destroy();
+          }
+        }
+      ]
+    });
   }
 
   private onSuccess(data, headers) {
@@ -153,15 +177,11 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   checkAll(value: boolean): void {
-    // eslint-disable-next-line no-console
-    console.log('checkAll', value);
     this.users.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
 
   refreshStatus(): void {
-    // eslint-disable-next-line no-console
-    console.log('');
     this.isAllDisplayDataChecked = this.users.every(item => this.mapOfCheckedId[item.id]);
     this.isIndeterminate = this.users.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
     this.numberOfChecked = this.users.filter(item => this.mapOfCheckedId[item.id]).length;

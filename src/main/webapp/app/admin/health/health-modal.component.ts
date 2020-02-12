@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 import { JhiHealthService } from './health.service';
 
 @Component({
@@ -10,7 +8,7 @@ import { JhiHealthService } from './health.service';
 export class JhiHealthModalComponent {
   currentHealth: any;
 
-  constructor(private healthService: JhiHealthService, public activeModal: NgbActiveModal) {}
+  constructor(private healthService: JhiHealthService) {}
 
   baseName(name) {
     return this.healthService.getBaseName(name);

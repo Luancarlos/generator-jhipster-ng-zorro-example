@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -27,7 +26,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer,
     private router: Router,
-    public activeModal: NgbActiveModal,
     private fb: FormBuilder
   ) {}
 
@@ -41,7 +39,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
       username: '',
       password: ''
     });
-    this.activeModal.dismiss('cancel');
+    // this.activeModal.dismiss('cancel');
   }
 
   login() {
@@ -54,7 +52,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
       .subscribe(
         () => {
           this.authenticationError = false;
-          this.activeModal.dismiss('login success');
+          // this.activeModal.dismiss('login success');
           if (
             this.router.url === '/account/register' ||
             this.router.url.startsWith('/account/activate') ||
@@ -81,12 +79,12 @@ export class JhiLoginModalComponent implements AfterViewInit {
   }
 
   register() {
-    this.activeModal.dismiss('to state register');
+    // this.activeModal.dismiss('to state register');
     this.router.navigate(['/account/register']);
   }
 
   requestResetPassword() {
-    this.activeModal.dismiss('to state requestReset');
+    // this.activeModal.dismiss('to state requestReset');
     this.router.navigate(['/account/reset', 'request']);
   }
 }

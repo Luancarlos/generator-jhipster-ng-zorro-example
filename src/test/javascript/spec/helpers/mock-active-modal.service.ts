@@ -1,5 +1,4 @@
 import { SpyObject } from './spyobject';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Spy = jasmine.Spy;
 
 export class MockActiveModal extends SpyObject {
@@ -7,7 +6,7 @@ export class MockActiveModal extends SpyObject {
   closeSpy: Spy;
 
   constructor() {
-    super(NgbActiveModal);
+    super();
     this.dismissSpy = this.spy('dismiss').andReturn(this);
     this.closeSpy = this.spy('close').andReturn(this);
   }

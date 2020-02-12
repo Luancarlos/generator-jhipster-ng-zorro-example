@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, EventEmitter, OnDestroy } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { User } from 'app/core/user/user.model';
@@ -9,19 +8,21 @@ import { UserService } from 'app/core/user/user.service';
   selector: 'jhi-user-mgmt-delete-dialog',
   templateUrl: './user-management-delete-dialog.component.html'
 })
-export class UserManagementDeleteDialogComponent {
-  user: User;
+export class UserManagementDeleteDialogComponent implements OnDestroy {
+  @Input() user: User;
+  eventSubscribe: any;
 
-  constructor(private userService: UserService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
-
-  clear() {
-    this.activeModal.dismiss('cancel');
+  constructor(private userService: UserService, private eventManager: JhiEventManager) {
+    this.eventSubscribe = this.userService.eventConfirmDelete.subscribe(() => this.confirmDelete());
   }
 
-  confirmDelete(login) {
-    this.userService.delete(login).subscribe(() => {
+  confirmDelete() {
+    this.userService.delete(this.user.login).subscribe(() => {
       this.eventManager.broadcast({ name: 'userListModification', content: 'Deleted a user' });
-      this.activeModal.close(true);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.eventSubscribe.unsubscribe();
   }
 }

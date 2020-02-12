@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
@@ -48,7 +47,7 @@ describe('Component Tests', () => {
       mockStateStorageService = fixture.debugElement.injector.get(StateStorageService);
       mockRouter = fixture.debugElement.injector.get(Router);
       mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
-      mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
+      // mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
     });
 
     it('should authenticate the user upon login when previous state was set', inject(

@@ -11,7 +11,6 @@ import { NgJhipsterModule, translatePartialLoader, missingTranslationHandler, Jh
 import locale from '@angular/common/locales/pt';
 
 import * as moment from 'moment';
-import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
 
 import { AuthInterceptor } from 'app/blocks/interceptor/auth.interceptor';
@@ -52,7 +51,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
       provide: LOCALE_ID,
       useValue: 'pt'
     },
-    { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
+    // { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
@@ -77,11 +76,10 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
   ]
 })
 export class NgzorroCoreModule {
-  constructor(iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig, languageService: JhiLanguageService) {
+  constructor(iconLibrary: FaIconLibrary, languageService: JhiLanguageService) {
     registerLocaleData(locale);
     iconLibrary.addIconPacks(fas);
     iconLibrary.addIcons(...fontAwesomeIcons);
-    dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
     languageService.init();
   }
 }

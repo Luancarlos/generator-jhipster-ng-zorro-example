@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
@@ -21,7 +20,6 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed: boolean;
   languages: any[];
   swaggerEnabled: boolean;
-  modalRef: NgbModalRef;
   version: string;
 
   constructor(

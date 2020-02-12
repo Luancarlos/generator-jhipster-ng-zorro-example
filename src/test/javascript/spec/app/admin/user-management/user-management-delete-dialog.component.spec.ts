@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -29,7 +28,7 @@ describe('Component Tests', () => {
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(UserService);
       mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
-      mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
+      // mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
     });
 
     describe('confirmDelete', () => {
