@@ -49,11 +49,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let user of users">
-            <td
-            nzShowCheckbox
+            <td nzShowCheckbox
+            [nzDisabled]="currentAccount.login === user.login"
             [(nzChecked)]="idsChecked[user.id]"
-            (nzCheckedChange)="refreshStatus()"></td
-                >
+            (nzCheckedChange)="refreshStatus()">
+            </td>
             <td><a [routerLink]="['./', user.login, 'view']">{{user.id}}</a></td>
             <td>{{user.login}}</td>
             <td>{{user.email}}</td>
@@ -106,14 +106,6 @@
         </tr>
       </tbody>
     </nz-table>
-    <!-- <div *ngIf="users">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
-    </div> -->
 </div>
 
 <nz-modal 

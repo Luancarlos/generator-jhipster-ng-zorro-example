@@ -39,7 +39,7 @@ describe('Component Tests', () => {
           spyOn(service, 'delete').and.returnValue(of({}));
 
           // WHEN
-          comp.confirmDelete('user');
+          comp.confirmDelete();
           tick();
 
           // THEN

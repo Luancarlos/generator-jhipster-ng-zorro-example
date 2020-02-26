@@ -9,10 +9,6 @@ import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ng
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgJhipsterModule, translatePartialLoader, missingTranslationHandler, JhiConfigService, JhiLanguageService } from 'ng-jhipster';
 import locale from '@angular/common/locales/pt';
-
-import * as moment from 'moment';
-import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
-
 import { AuthInterceptor } from 'app/blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from 'app/blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.interceptor';

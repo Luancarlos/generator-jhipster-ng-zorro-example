@@ -107,6 +107,9 @@
     "delete": {
       "title": "Confirme a exclusão"
     },
+    "select": {
+      "multSelected": "e mais {{ count }} selecionado(s)"
+    },
     "validation": {
       "required": "O campo é obrigatório.",
       "minlength": "Este campo deve ter pelo menos {{ min }} caracteres.",

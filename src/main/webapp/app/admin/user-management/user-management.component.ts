@@ -177,7 +177,11 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   checkAll(value: boolean): void {
-    this.users.forEach(item => (this.idsChecked[item.id] = value));
+    this.users.forEach(item => {
+      if (this.currentAccount.login !== item.login) {
+        this.idsChecked[item.id] = value;
+      }
+    });
   }
 
   refreshStatus(): void {
@@ -186,18 +190,32 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   openModalDeleteChecked() {
-    this.visbleModalExcluir = true;
+    let aux = false;
+
+    for (const key in this.idsChecked) {
+      if (this.idsChecked[key]) {
+        aux = true;
+      }
+    }
+
+    if (!aux) {
+      this.alertService.warning('error.notCheckedDelete');
+    } else {
+      this.visbleModalExcluir = true;
+    }
   }
 
   deleteUsers() {
     const ids = [];
 
     for (const key in this.idsChecked) {
-      ids.push(key);
+      if (this.idsChecked[key]) {
+        ids.push(key);
+      }
     }
 
     if (ids.length > 0) {
-      this.userService.deleteMultlipe(ids).subscribe(res => {
+      this.userService.deleteMultlipe(ids).subscribe(() => {
         this.loadAll();
         this.visbleModalExcluir = false;
       });
