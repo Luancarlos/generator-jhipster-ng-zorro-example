@@ -125,7 +125,8 @@
       "edit": "Editar",
       "open": "Abrir",
       "save": "Salvar",
-      "view": "Visualizar"
+      "view": "Visualizar",
+      "export": "Exportar"
     },
     "detail": {
       "field": "Campo",

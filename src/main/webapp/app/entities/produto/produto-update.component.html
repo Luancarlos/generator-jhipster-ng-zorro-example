@@ -6,6 +6,7 @@
     </nz-page-header>
 
     <jhi-alert-error></jhi-alert-error>
+    <br />
 
     <form name="editForm" (ngSubmit)="save()" [formGroup]="editForm">
         <nz-form-item *ngIf="editForm.get(['id']).value">
@@ -55,16 +56,16 @@
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-label [nzSpan]="3" nzRequired>
+            <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="ngzorroApp.produto.descricao">Descricao</span>
             </nz-form-label>
             <nz-form-control [nzSpan]="12" nzHasFeedback>
-                <textarea nz-input formControlName="descricao" ></textarea>
+                <textarea nz-input formControlName="descricao"></textarea>
             </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-label [nzSpan]="3" nzRequired>
+            <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="ngzorroApp.produto.preco">Preco</span>
             </nz-form-label>
             <nz-form-control [nzSpan]="12" nzHasFeedback>
@@ -73,31 +74,32 @@
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-label [nzSpan]="3" nzRequired>
+            <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="ngzorroApp.produto.data">Data</span>
             </nz-form-label>
             <nz-form-control [nzSpan]="12" nzHasFeedback>
-                <nz-date-picker  formControlName="data"></nz-date-picker>
+                <nz-date-picker formControlName="data"></nz-date-picker>
             </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-label [nzSpan]="3" nzRequired>
+            <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="ngzorroApp.produto.hora">Hora</span>
             </nz-form-label>
             <nz-form-control [nzSpan]="12" nzHasFeedback>
-                <input nz-input type="datetime-local" formControlName="hora" placeholder="YYYY-MM-DD HH:mm" /> 
+                <input nz-input type="datetime-local" formControlName="hora" placeholder="YYYY-MM-DD HH:mm" />
             </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-label [nzSpan]="3" nzRequired>
+            <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="ngzorroApp.produto.categoria">Categoria</span>
             </nz-form-label>
             <nz-form-control [nzSpan]="12" nzHasFeedback>
                 <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
-                name="categorias" formControlName="categorias">
-                    <nz-option *ngFor="let categoriaOption of categorias; trackBy: trackCategoriaById" [nzValue]="categoriaOption" [nzLabel]="categoriaOption.id">
+                    name="categorias" formControlName="categorias">
+                    <nz-option *ngFor="let categoriaOption of categorias; trackBy: trackCategoriaById"
+                        [nzValue]="categoriaOption" [nzLabel]="categoriaOption.id">
                     </nz-option>
                 </nz-select>
                 <ng-template #tagPlaceHolder let-selectedList>
@@ -121,26 +123,4 @@
         </nz-form-item>
 
     </form>
-
-    <!-- <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-
-
-         <div class="form-group col-md-12">
-            <label jhiTranslate="ngzorroApp.produto.categoria" for="field_categorias">Categoria</label>
-            <select class="form-control" id="field_categorias" multiple name="categorias" formControlName="categorias">
-                <option [ngValue]="getSelected(editForm.get('categorias').value, categoriaOption)"
-                    *ngFor="let categoriaOption of categorias; trackBy: trackById">{{categoriaOption.id}}</option>
-            </select>
-        </div> 
-
-<div>
-    <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-        <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-    </button>
-    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-        <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-    </button>
-</div>
-</form> -->
-
 </div>

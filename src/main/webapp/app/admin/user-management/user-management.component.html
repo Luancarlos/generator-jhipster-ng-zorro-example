@@ -17,7 +17,7 @@
 
     <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
-
+    <br/>
     <nz-table 
     nzShowSizeChanger 
     [nzTotal]="totalItems"
@@ -27,7 +27,7 @@
     (nzPageIndexChange)="loadPage($event)"
     [nzData]="users"
     [nzLoading]="users ? false : true"  
-    [nzScroll]="{ x: '1350px', y: '240px' }">
+    [nzScroll]="{ x: '1350px', y: '400px' }">
       <thead (nzSortChange)="transition($event)"> 
         <tr>
           <th

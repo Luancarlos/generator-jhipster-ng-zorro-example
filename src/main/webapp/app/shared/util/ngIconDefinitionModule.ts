@@ -25,7 +25,9 @@ import {
   DeleteOutline,
   ArrowLeftOutline,
   StopOutline,
-  SaveOutline
+  SaveOutline,
+  FilterOutline,
+  DownloadOutline
 } from '@ant-design/icons-angular/icons';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -53,7 +55,9 @@ const icons: IconDefinition[] = [
   DeleteOutline,
   ArrowLeftOutline,
   StopOutline,
-  SaveOutline
+  SaveOutline,
+  FilterOutline,
+  DownloadOutline
 ];
 
 @NgModule({

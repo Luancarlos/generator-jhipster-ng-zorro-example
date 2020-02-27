@@ -23,6 +23,10 @@ body {
   height: 100vh;
 }
 
+.ant-page-header {
+  padding: 0px !important;
+}
+
 .menu-sidebar {
   position: relative;
   z-index: 10;

@@ -34,6 +34,7 @@ export class ProdutoComponent implements OnInit, OnDestroy {
   idsChecked: { [key: string]: boolean } = {};
   listOfAllData: IProduto[] = [];
   visibleModalExcluir = false;
+  visibleFilter = false;
 
   constructor(
     protected produtoService: ProdutoService,

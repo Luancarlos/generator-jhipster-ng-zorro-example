@@ -7,7 +7,8 @@
     </nz-page-header>
 
     <jhi-alert-error></jhi-alert-error>
-    
+    <br />
+
     <form nz-form [formGroup]="editForm" (ngSubmit)="save()">
         <nz-form-item *ngIf="user.id">
             <nz-form-label [nzSpan]="3">
@@ -131,7 +132,7 @@
         </nz-form-item>
 
         <nz-form-item>
-            <nz-form-control [nzOffset]="3" [nzSpan]="12">
+            <nz-form-control [nzOffset]="1" [nzSpan]="12">
                 <button type="button" nz-button nzType="default" (click)="previousState()">
                     <i nz-icon nzType="stop" nzTheme="outline"></i>
                     <span jhiTranslate="entity.action.cancel">Cancel</span>

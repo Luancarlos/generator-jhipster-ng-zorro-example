@@ -8,9 +8,20 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
                 <span jhiTranslate="entity.action.delete">Delete</span>
             </button>
+
+            <button nz-button nzType="default">
+                <i nz-icon nzType="download" nzTheme="outline"></i>
+                <span jhiTranslate="entity.action.export">Exportar</span>
+            </button>
+
             <button routerLink="new" nz-button nzType="primary">
                 <i nz-icon nzType="plus" nzTheme="outline"></i>
                 <span jhiTranslate="ngzorroApp.produto.home.createLabel">Create a new Produto</span>
+            </button>
+
+            <button nz-button nzType="default" (click)="visibleFilter = true">
+                <i nz-icon nzType="filter" nzTheme="outline"></i>
+                <!-- <span jhiTranslate="entity.action.delete">Delete</span> -->
             </button>
         </nz-page-header-extra>
     </nz-page-header>
@@ -35,7 +46,7 @@
     (nzPageIndexChange)="loadPage($event)"
     [nzData]="produtos"
     [nzLoading]="produtos ? false : true"  
-    [nzScroll]="{ x: '1350px', y: '240px' }">
+    [nzScroll]="{ x: '1350px', y: '400px' }">
       <thead (nzSortChange)="transition($event)"> 
         <tr>
           <th
@@ -61,9 +72,9 @@
             </td>
             <td><a [routerLink]="['/produto', produto.id, 'view']">{{produto.id}}</a></td>
             <td><img *ngIf="produto.imagem"
-                [src]="'data:' + produto.imagemContentType + ';base64,' + produto.imagem" style="width: 60px"></td>
+                [src]="'data:' + produto.imagemContentType + ';base64,' + produto.imagem" style="width: 40px"></td>
             <td>{{produto.nome}}</td>
-            <td>{{produto.descricao}}</td>
+            <td><p style="width: 100px; text-overflow: ellipsis; white-space: nowrap; overflow: auto;">{{produto.descricao}}</p></td>
             <td>{{produto.preco}}</td>
             <td>{{produto.data | date:'mediumDate'}}</td>
             <td>{{produto.hora | date:'medium'}}</td>
@@ -98,3 +109,90 @@
 (nzOnOk)="deleteAll()">
     <span jhiTranslate="ngzorroApp.produto.delete.questionAll">confirm remover users</span>
 </nz-modal>
+
+
+<nz-drawer
+[nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+[nzMaskClosable]="false"
+[nzWidth]="520"
+[nzVisible]="visibleFilter"
+nzTitle="Filtro de produto"
+(nzOnClose)="visibleFilter = false"
+>
+<form nz-form>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>Name</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="please enter user name" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>Url</nz-form-label>
+        <nz-form-control>
+          <nz-input-group nzAddOnBefore="http://" nzAddOnAfter=".com">
+            <input type="text" nz-input placeholder="please enter url" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>Owner</nz-form-label>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Please select an owner"></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>Type</nz-form-label>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Please choose the type"></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>Approver</nz-form-label>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Please choose the approver"></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label>DateTime</nz-form-label>
+        <nz-form-control>
+          <nz-range-picker></nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>Description</nz-form-label>
+        <nz-form-control>
+          <textarea
+            nz-input
+            placeholder="please enter url description"
+            [nzAutosize]="{ minRows: 4, maxRows: 4 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<div class="footer">
+  <button type="button" (click)="visibleFilter = false" class="ant-btn" style="margin-right: 8px;"><span>Cancelar</span></button>
+  <button type="button" (click)="visibleFilter = false" class="ant-btn ant-btn-primary"><span>Filtrar</span></button>
+</div>
+</nz-drawer>
