@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
@@ -16,6 +16,7 @@ type EntityArrayResponseType = HttpResponse<IProduto[]>;
 @Injectable({ providedIn: 'root' })
 export class ProdutoService {
   public resourceUrl = SERVER_API_URL + 'api/produtos';
+  eventConfirmDelete: EventEmitter<string> = new EventEmitter();
 
   constructor(protected http: HttpClient) {}
 
@@ -50,6 +51,10 @@ export class ProdutoService {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  deleteMultiple(ids: number[]): Observable<any> {
+    return this.http.post(`${this.resourceUrl}/delete`, ids);
+  }
+
   protected convertDateFromClient(produto: IProduto): IProduto {
     const copy: IProduto = Object.assign({}, produto, {
       data: produto.data != null && produto.data.isValid() ? produto.data.format(DATE_FORMAT) : null,
@@ -74,5 +79,9 @@ export class ProdutoService {
       });
     }
     return res;
+  }
+
+  emitEventConfirmDelete() {
+    this.eventConfirmDelete.emit();
   }
 }

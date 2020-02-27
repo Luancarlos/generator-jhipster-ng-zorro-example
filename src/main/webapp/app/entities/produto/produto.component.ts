@@ -2,14 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiParseLinks, JhiDataUtils } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { JhiEventManager, JhiParseLinks, JhiDataUtils, JhiAlertService } from 'ng-jhipster';
 import { IProduto } from 'app/shared/model/produto.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ProdutoService } from './produto.service';
 import { ProdutoDeleteDialogComponent } from './produto-delete-dialog.component';
+import { NzModalService } from 'ng-zorro-antd';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-produto',
@@ -29,6 +29,12 @@ export class ProdutoComponent implements OnInit, OnDestroy {
   previousPage: any;
   reverse: any;
 
+  isAllDisplayDataChecked = false;
+  isIndeterminate = false;
+  idsChecked: { [key: string]: boolean } = {};
+  listOfAllData: IProduto[] = [];
+  visibleModalExcluir = false;
+
   constructor(
     protected produtoService: ProdutoService,
     protected parseLinks: JhiParseLinks,
@@ -36,7 +42,9 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    private alertService: JhiAlertService,
+    public modalService: NzModalService,
+    private translateService: TranslateService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -112,11 +120,6 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('produtoListModification', () => this.loadAll());
   }
 
-  delete(produto: IProduto) {
-    const modalRef = this.modalService.open(ProdutoDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.produto = produto;
-  }
-
   sort() {
     const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
     if (this.predicate !== 'id') {
@@ -129,5 +132,76 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.produtos = data;
+  }
+
+  openModalDeleteChecked() {
+    let aux = false;
+
+    for (const key in this.idsChecked) {
+      if (this.idsChecked[key]) {
+        aux = true;
+      }
+    }
+
+    if (!aux) {
+      this.alertService.warning('error.notCheckedDelete');
+    } else {
+      this.visibleModalExcluir = true;
+    }
+  }
+
+  checkAll(value: boolean): void {
+    this.produtos.forEach(item => {
+      this.idsChecked[item.id] = value;
+    });
+  }
+
+  refreshStatus(): void {
+    this.isAllDisplayDataChecked = this.produtos.every(item => this.idsChecked[item.id]);
+    this.isIndeterminate = this.produtos.some(item => this.idsChecked[item.id]) && !this.isAllDisplayDataChecked;
+  }
+
+  traslateString(i18n) {
+    return this.translateService.get(i18n);
+  }
+
+  async delete(produto: IProduto) {
+    const modalRef = this.modalService.create({
+      nzTitle: await this.traslateString('entity.delete.title').toPromise(),
+      nzContent: ProdutoDeleteDialogComponent,
+      nzComponentParams: { produto },
+      nzFooter: [
+        {
+          label: await this.traslateString('entity.action.cancel').toPromise(),
+          shape: 'default',
+          onClick: () => modalRef.destroy()
+        },
+        {
+          label: await this.traslateString('entity.action.delete').toPromise(),
+          type: 'primary',
+          onClick: () => {
+            this.produtoService.emitEventConfirmDelete();
+            modalRef.destroy();
+          }
+        }
+      ]
+    });
+  }
+
+  deleteAll() {
+    const ids = [];
+
+    for (const key in this.idsChecked) {
+      if (this.idsChecked[key]) {
+        ids.push(key);
+      }
+    }
+
+    if (ids.length > 0) {
+      this.produtoService.deleteMultiple(ids).subscribe(() => {
+        this.loadAll();
+        this.visibleModalExcluir = false;
+      });
+    }
   }
 }

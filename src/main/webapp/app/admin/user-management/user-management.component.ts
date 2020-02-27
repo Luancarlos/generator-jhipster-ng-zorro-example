@@ -36,7 +36,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   isIndeterminate = false;
   idsChecked: { [key: string]: boolean } = {};
   listOfAllData: User[] = [];
-  visbleModalExcluir = false;
+  visibleModalExcluir = false;
 
   constructor(
     private userService: UserService,
@@ -158,7 +158,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
           label: await this.traslateString('entity.action.delete').toPromise(),
           type: 'primary',
           onClick: () => {
-            this.userService.emitrEventConfirmDelete();
+            this.userService.emitEventConfirmDelete();
             modalRef.destroy();
           }
         }
@@ -201,7 +201,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     if (!aux) {
       this.alertService.warning('error.notCheckedDelete');
     } else {
-      this.visbleModalExcluir = true;
+      this.visibleModalExcluir = true;
     }
   }
 
@@ -215,9 +215,9 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     }
 
     if (ids.length > 0) {
-      this.userService.deleteMultlipe(ids).subscribe(() => {
+      this.userService.deleteMultiple(ids).subscribe(() => {
         this.loadAll();
-        this.visbleModalExcluir = false;
+        this.visibleModalExcluir = false;
       });
     }
   }

@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IProduto } from 'app/shared/model/produto.model';
@@ -9,22 +7,20 @@ import { ProdutoService } from './produto.service';
 @Component({
   templateUrl: './produto-delete-dialog.component.html'
 })
-export class ProdutoDeleteDialogComponent {
-  produto: IProduto;
-
-  constructor(protected produtoService: ProdutoService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
-
-  clear() {
-    this.activeModal.dismiss('cancel');
+export class ProdutoDeleteDialogComponent implements OnDestroy {
+  @Input() produto: IProduto;
+  eventSubscribe: any;
+  constructor(protected produtoService: ProdutoService, protected eventManager: JhiEventManager) {
+    this.eventSubscribe = this.produtoService.eventConfirmDelete.subscribe(() => this.confirmDelete());
   }
 
-  confirmDelete(id: number) {
-    this.produtoService.delete(id).subscribe(() => {
-      this.eventManager.broadcast({
-        name: 'produtoListModification',
-        content: 'Deleted an produto'
-      });
-      this.activeModal.dismiss(true);
+  confirmDelete() {
+    this.produtoService.delete(this.produto.id).subscribe(() => {
+      this.eventManager.broadcast({ name: 'produtoListModification', content: 'Deleted a produto' });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.eventSubscribe.unsubscribe();
   }
 }
