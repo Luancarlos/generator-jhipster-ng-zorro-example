@@ -4,7 +4,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
@@ -77,9 +77,11 @@ export class ProdutoUpdateComponent implements OnInit {
     return this.dataUtils.openFile(contentType, field);
   }
 
+  customReq(item) {
+    return Subscription.EMPTY;
+  }
+
   setFileData(event, field: string, isImage) {
-    // eslint-disable-next-line no-console
-    console.log('event', event);
     return new Promise((resolve, reject) => {
       if (event && event.file) {
         const file: File = event.file.originFileObj;
@@ -121,6 +123,7 @@ export class ProdutoUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const produto = this.createFromForm();
+
     if (produto.id !== undefined) {
       this.subscribeToSaveResponse(this.produtoService.update(produto));
     } else {
@@ -137,7 +140,7 @@ export class ProdutoUpdateComponent implements OnInit {
       nome: this.editForm.get(['nome']).value,
       descricao: this.editForm.get(['descricao']).value,
       preco: this.editForm.get(['preco']).value,
-      data: this.editForm.get(['data']).value,
+      data: this.editForm.get(['data']).value != null ? moment(this.editForm.get(['data']).value) : null,
       hora: this.editForm.get(['hora']).value != null ? moment(this.editForm.get(['hora']).value, DATE_TIME_FORMAT) : undefined,
       categorias: this.editForm.get(['categorias']).value
     };
