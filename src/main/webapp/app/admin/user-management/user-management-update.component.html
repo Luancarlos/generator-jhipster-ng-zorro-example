@@ -6,12 +6,14 @@
         </nz-page-header-title>
     </nz-page-header>
 
+    <jhi-alert-error></jhi-alert-error>
+    
     <form nz-form [formGroup]="editForm" (ngSubmit)="save()">
         <nz-form-item *ngIf="user.id">
             <nz-form-label [nzSpan]="3">
                 <span jhiTranslate="global.field.id">ID</span>
             </nz-form-label>
-            <nz-form-control [nzSpan]="12" [nzErrorTip]="loginErrorTpl">
+            <nz-form-control [nzSpan]="12">
                 <input nz-input formControlName="id" readonly disabled="true" />
             </nz-form-control>
         </nz-form-item>
